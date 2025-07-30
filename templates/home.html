@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Product Listing</h1>
+
+<form method="get" action="">
+  <input type="text" name="query" placeholder="Search">
+  <button type="submit">Search</button>
+</form>
+
+<h2>Your result{% if query %} for "{{ query }}" {% endif %}</h2>
+
+{% if all_product %}
+  <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {% for product in all_product %}
+      <div style="border: 1px solid #ddd; padding: 15px; width: 200px; text-align: center;">
+        <img src="{{ product.product_image.url }}" alt="{{ product.name }}" style="max-width: 100%; height: auto;">
+        <h3>{{ product.name }}</h3>
+        <p><strong>${{ product.price }}</strong></p>
+        <form method="POST" action="{% url 'add_to_cart' product.id %}">{% csrf_token %}
+          <button type="submit">Add to Cart</button>
+        </form>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No products available at the moment.</p>
+{% endif %}
+
+{% endblock %}

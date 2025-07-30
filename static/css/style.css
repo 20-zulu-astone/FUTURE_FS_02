@@ -1,0 +1,11 @@
+.background_color {
+    color:green;
+
+}
+
+.background_image{
+    background-image:url{'media/product_images/for_background.jpg'};
+    background-size:cover;
+    background-position:center;
+    height:100vh;
+}
