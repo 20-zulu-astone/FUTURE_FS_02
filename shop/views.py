@@ -69,8 +69,6 @@ def checkout(request):
 def success_order(request):
     return render(request,'success.html')
 
-
-
 def add_to_cart(request, product_id):
     print("Form submitted")
     print("Product ID", product_id)
