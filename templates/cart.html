@@ -10,38 +10,38 @@
   <table>
     <thead>
       <tr>
-        <th>Product</th>
-        <th>Image</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Subtotal</th>
-        <th>Action</th>
+        <th style="padding: 15px 25px;">Product</th>
+        <th style="padding: 15px 25px;">Image</th>
+        <th style="padding: 15px 25px;">Price</th>
+        <th style="padding: 15px 25px;">Quantity</th>
+        <th style="padding: 15px 25px;">Subtotal</th>
+        <th style="padding: 15px 25px;">Action</th>
       </tr>
     </thead>
     <tbody>
-      {% for item in product %}
+      {% for item in cart_items %}
       <tr>
-        <td>{{ item.product.name }}</td>
+        <td>{{ item.product.name }}</td> 
         <td><img src="{{ item.product.product_image.url }}" alt="{{ item.product.name }}" width="80"></td>
         <td>${{ item.product.price }}</td>
         <td>{{ item.quantity }}</td>
-        <td>${{ item.get_subtotal }}</td>
+        <td>${{ item.subtotal }}</td>
         <td>
           <!-- Optional: Add buttons/links to update quantity or remove item -->
-          <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
+          <button class="btn btn-danger"><a href="{% url 'remove_from_cart' item.product.id %}">Remove</a></button>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 
-  <h3>Total: ${{ subtotal }}</h3>
+  <h3>Total: ${{ total }}</h3>
 
-  <a href="{% url 'checkout' %}"><button>Proceed to Checkout</button></a>
+  <a href="{% url 'checkout' %}"><button class="btn btn-warning">Proceed to Checkout</button></a>
 
 {% else %}
   <p>Your cart is empty.</p>
-  <a href="{% url 'home' %}">Continue Shopping</a>
+  <a href="{% url 'home' %}"><button class="btn btn-primary">Continue Shopping</button></a>
 {% endif %}
 
 {% endblock %}

@@ -1,57 +1,28 @@
 {% extends 'base.html' %}
-{% load static%}
+{%block content %}
+{% if order_summary %}
+  <h1>Order Summary</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order_summary %}
+      <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ item.subtotal }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h3>Total: ${{ total }}</h3>
+{% else %}
+  <p>No order to show.</p>
+{% endif %}
 
-
-<div>
-  <title>Order Summary</title>
-</div>
-
-{% block content %}
-<div class="container my-5">
-  <h1 class="mb-4">Order Summary</h1>
-
-  {% if order %}
-    <div class="mb-3">
-      <strong>Order Number:</strong> {{ orderout.id }}<br>
-      <strong>Order Date:</strong> {{ orderout.date|date:"F j, Y, g:i a" }}
-    </div>
-
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Subtotal</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for product in order.product.all %}
-        <tr>
-          <td>{{ product.product.name }}</td>
-          <td>${{ product.product.price }}</td>
-          <td>{{ product.quantity }}</td>
-          <td>${{ product.get_subtotal }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    <h3 class="mt-4">Total: ${{ order.total_price }}</h3>
-
-    {% if order.address %}
-    <div class="mt-5">
-      <h4>Shipping Address</h4>
-      <p>{{ orderout.address }}</p>
-    </div>
-    {% endif %}
-
-    <div class="alert alert-success mt-4" role="alert">
-      Thank you for your purchase! Your order is being processed.
-    </div>
-
-  {% else %}
-    <p>No order found.</p>
-  {% endif %}
-</div>
 {% endblock %}

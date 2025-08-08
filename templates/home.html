@@ -4,12 +4,25 @@
 {% block content %}
 <h1>Product Listing</h1>
 
-<form method="get" action="">
-  <input type="text" name="query" placeholder="Search">
-  <button type="submit">Search</button>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form class="d-flex" method="GET" action="{% url 'home' %}">
+    <input 
+        class="form-control form-control-lg me-2" 
+        type="search" 
+        name="q" 
+        placeholder="Search..." 
+        aria-label="Search"
+        value="{{ request.GET.q|default:'' }}"
+    >
+    <button class="btn btn-primary btn-lg" type="submit">Search</button>
 </form>
+        </div>
+    </div>
+</div>
 
-<h2>Your result{% if query %} for "{{ query }}" {% endif %}</h2>
+<h2> {% if query %} for "{{ query }}" {% endif %}</h2>
 
 {% if all_product %}
   <div style="display: flex; flex-wrap: wrap; gap: 20px;">
@@ -18,8 +31,9 @@
         <img src="{{ product.product_image.url }}" alt="{{ product.name }}" style="max-width: 100%; height: auto;">
         <h3>{{ product.name }}</h3>
         <p><strong>${{ product.price }}</strong></p>
-        <form method="POST" action="{% url 'add_to_cart' product.id %}">{% csrf_token %}
-          <button type="submit">Add to Cart</button>
+        <form method="POST" action="{% url 'add_to_cart' product.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-success">Add to Cart</button>
         </form>
       </div>
     {% endfor %}

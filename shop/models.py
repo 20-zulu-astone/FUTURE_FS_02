@@ -24,12 +24,29 @@ class cartitem(models.Model):
 
 
 
-class orders(models.Model):
+"""class orders(models.Model):
     fullname = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     date = models.DateTimeField(auto_now_add=True)
     phone = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"{self.fullname}  {self.address}"
+        return f"{self.fullname}  {self.address}"""
+
+class Order(models.Model):
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    address = models.TextField()
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, default='pending')
+    payment_status = models.CharField(max_length=20, default='pending')  # pending, paid, failed
+    payment_method = models.CharField(max_length=50, blank=True, null=True)
+    paid_at = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Order {self.id} by {self.full_name}"
+
 
